@@ -1,0 +1,23 @@
+{% extends 'home.html' %}
+{% block title %} api管理 {% endblock %}
+
+{% block head %}
+<link href="/plugins/highlight/styles/default.css" rel="stylesheet" />
+{% endblock %}
+
+{% block main %} 
+    <div class="border-bottom">
+        <h1 class="text-center">{{detail.name}}</h1>
+        <p class="text-center">{{detail.update_time}}</p>
+    </div>
+    <div>
+        <pre>
+            <code class="plaintext">{{detail.content}}</code>
+        </pre>
+    </div>
+{% endblock %}
+
+{% block footer %} 
+<script src="/plugins/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+{% endblock %}

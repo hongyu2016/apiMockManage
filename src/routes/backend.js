@@ -10,4 +10,5 @@ router
     .get('/list',BackendArticle.getList)
     .get('/',Index.index)
     .get('/api',ApiRecord.getList)
+    .get('/api/:id',ApiRecord.getDetail)
 module.exports = router;    

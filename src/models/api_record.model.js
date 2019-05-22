@@ -6,6 +6,11 @@ class RecordModel{
     static async getList(){
         return Record.findAll()
     }
+    static async getDetail(id){
+        return Record.findOne({
+            where:{id}
+        })
+    }
 }
 
 module.exports=RecordModel;
