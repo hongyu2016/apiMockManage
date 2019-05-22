@@ -1,5 +1,6 @@
-const moment = require('moment');
-module.exports= (sequelize,DataTypes)=>{
+import moment from 'moment'
+
+export default function (sequelize,DataTypes){   
     return sequelize.define('h_api_record',{
         id:{
             type:DataTypes.INTEGER,
