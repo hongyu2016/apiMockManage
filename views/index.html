@@ -1,0 +1,50 @@
+{% extends 'home.html' %}
+{% block title %} 首页 {% endblock %}
+
+{% block header %}
+
+{% endblock %}
+
+{% block main %} 
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">                   
+      <h2 class="h2">列表</h2>
+      <div class="btn-toolbar mb-2 mb-md-0">
+          <div class="btn-group mr-2">
+              <button class="btn btn-sm btn-outline-secondary">分享</button>
+              <button class="btn btn-sm btn-outline-secondary">导出</button>
+          </div>
+          <button class="btn btn-sm btn-outline-secondary dropdown-toggle">
+              <span data-feather="calendar"></span>
+              本周
+          </button>
+      </div>
+  </div>
+
+  {# <h2>二级标题</h2> #}
+  <div class="table-responsive">
+      <table class="table table-striped table-sm">
+          <thead>
+              <tr>
+                  <th>序号</th>
+                  <th>Header2</th>
+                  <th>Header</th>
+                  <th>Header</th>
+                  <th>Header</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <td>1,001</td>
+                  <td>Lorem</td>
+                  <td>ipsum</td>
+                  <td>dolor</td>
+                  <td>sit</td>
+              </tr>              
+          </tbody>
+      </table>
+  </div>
+{% endblock %}
+
+{% block footer %} 
+
+{% endblock %}
