@@ -3,7 +3,6 @@ const beautify = require('js-beautify').js;  //格式化代码
 class ApiRecord{
     static async getList(ctx){
         let data=await recordModel.getList();   
-        console.log(data)
         await ctx.render('pages/api_record/list', {
             list: data
         })
@@ -25,11 +24,17 @@ class ApiRecord{
      */
     static async add(ctx){
         let id=ctx.query.id;
-        let data=await recordModel.getDetail(id);
-        await ctx.render('pages/api_record/add', {
-            detail: data,
-            code:beautify(data.code_rule, { indent_size: 2, space_in_empty_paren: true }) //格式化代码
-        })
+        
+        if(id){
+            let data=await recordModel.getDetail(id);
+            await ctx.render('pages/api_record/add', {
+                detail: data,
+                code:beautify(data.code_rule, { indent_size: 2, space_in_empty_paren: true }) //格式化代码
+            });
+            return false;
+        }
+        
+        await ctx.render('pages/api_record/add')
     }
     /**
      * 新增编辑提交
@@ -37,9 +42,13 @@ class ApiRecord{
      */
     static async addPost(ctx){
         let params=ctx.request.body;
-        params.create_time=new Date();
+        let id=params.id;
         params.update_time=new Date();
-        
+        if(id){ //编辑
+            let data=await recordModel.edit(params);
+            return ctx.success({ msg:'编辑成功',data: data }); 
+        }
+        params.create_time=new Date();          
         let data=await recordModel.add(params);
         return ctx.success({ msg:'新增成功',data: data }); 
     }

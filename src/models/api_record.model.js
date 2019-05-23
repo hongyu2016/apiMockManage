@@ -20,6 +20,18 @@ class RecordModel{
             update_time:data.update_time
         })
     }
+    static async edit(data){
+        return Record.update({
+            name:data.name,
+            remark:data.remark,
+            code_rule:data.code_rule,
+            update_time:data.update_time
+        },{
+            where:{
+                id:data.id
+            }
+        })
+    }
 }
 
 module.exports=RecordModel;

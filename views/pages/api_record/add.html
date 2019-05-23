@@ -68,10 +68,12 @@
         });
         $('.save').click(function (e) {
             e.preventDefault();
+            var id=$('#code_id').val();
             var name = $('#name').val(),
                 remark = $('#remark').val(),
                 rule = $('#rule').val();
             $.post('./addPost', {
+                id:id,
                 name: name,
                 remark: remark,
                 code_rule: rule
