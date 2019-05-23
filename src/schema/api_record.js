@@ -5,7 +5,7 @@ export default function (sequelize,DataTypes){
         id:{
             type:DataTypes.INTEGER,
             primaryKey:true,
-            allowNull:false,
+            allowNull:true,
             aotuIncrement:true
         },
         name:{
@@ -13,10 +13,15 @@ export default function (sequelize,DataTypes){
             allowNull:false,
             field:'name'
         },
-        content:{
+        remark:{
             type:DataTypes.TEXT,
             allowNull:true,
-            field:'content'
+            field:'remark'
+        },
+        code_rule:{
+            type:DataTypes.TEXT,
+            allowNull:true,
+            field:'code_rule'
         },
         create_time:{
             allowNull:true,

@@ -48,15 +48,15 @@ app.use(async (ctx, next) => {
 /* app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods()) */
 app.use(response)
-app.use(backendRouter.routes(),backendRouter.allowedMethods())
-//app.use(frontendRouter.routes(),frontendRouter.allowedMethods())
+app.use(backendRouter.routes(),backendRouter.allowedMethods()) //back模块路由
+app.use(frontendRouter.routes(),frontendRouter.allowedMethods()) //front模块路由
 
 
 
 
 // error-handling
 app.on('error', (err, ctx) => {
-  console.error('server error', err, ctx)
+  console.error('服务器错误', err, ctx)
   ctx.render('error', { message: ' 服务器错误!',error: err });
 });
 

@@ -3,21 +3,36 @@
 
 {% block head %}
 <link href="/plugins/highlight/styles/default.css" rel="stylesheet" />
+
 {% endblock %}
 
 {% block main %} 
-    <div class="border-bottom">
+    <div class="border-bottom main-top">
         <h1 class="text-center">{{detail.name}}</h1>
         <p class="text-center">{{detail.update_time}}</p>
     </div>
-    <div>
-        <pre>
-            <code class="plaintext">{{detail.content}}</code>
-        </pre>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                示例代码
+            </div>
+            <div class="col-md-8">
+                <pre class="beautify">
+                    <code class="plaintext">{{code}}</code>
+                </pre> 
+            </div>
+        </div>
+             
     </div>
+
 {% endblock %}
 
 {% block footer %} 
-<script src="/plugins/highlight/highlight.pack.js"></script>
+<script src="/plugins/highlight/highlight.pack.js"></script>{# 代码高亮 #}
 <script>hljs.initHighlightingOnLoad();</script>
+<script>     
+    $(function(){
+        
+    })
+</script>
 {% endblock %}

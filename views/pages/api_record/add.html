@@ -1,0 +1,84 @@
+{% extends 'home.html' %}
+{% block title %} api管理 {% endblock %}
+
+{% block head %}
+<link href="/plugins/highlight/styles/default.css" rel="stylesheet" />
+
+{% endblock %}
+
+{% block main %}
+<div class="border-bottom main-top">
+    <h2 class="h2">新增api</h2>
+</div>
+
+<form id="form">
+    <input type="hidden" id="code_id" value="{{detail.id}}" />
+    <div class="form-group row">
+        <label for="name" class="col-sm-2 col-form-label">名称</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="name" name="name" placeholder="" value="{{detail.name}}">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="remark" class="col-sm-2 col-form-label">备注</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="remark" name="remark" placeholder="" value="{{detail.remark}}">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="rule" class="col-sm-2 col-form-label">代码规则</label>
+        <div class="col-sm-10">
+            <textarea class="form-control" id="rule" name="rule" rows="10" placeholder="">{{code}}</textarea>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="rule" class="col-sm-2 col-form-label">代码规则预览</label>
+        <div class="col-sm-10">
+                <pre class="beautify">
+                    <code class="plaintext">{{code}}</code>
+                </pre> 
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-10">
+            <button type="submit" class="btn btn-primary save">保存</button>
+        </div>
+    </div>
+</form>
+
+{% endblock %}
+
+{% block footer %}
+<script src="/plugins/highlight/highlight.pack.js"></script>{# 代码高亮 #}
+<!-- <script>hljs.initHighlightingOnLoad();</script> -->
+<script>
+    function beautify(){
+        document.querySelectorAll('.beautify .plaintext').forEach((block) => {
+            hljs.highlightBlock(block);
+        });
+    }
+    $(function () {
+        beautify()       
+        $('#rule').blur(function(){
+            var _data=$(this).val();
+            var $code=$('.beautify>code');
+            $code.html(_data);
+            beautify()
+        });
+        $('.save').click(function (e) {
+            e.preventDefault();
+            var name = $('#name').val(),
+                remark = $('#remark').val(),
+                rule = $('#rule').val();
+            $.post('./addPost', {
+                name: name,
+                remark: remark,
+                code_rule: rule
+            }, function (data) {
+                console.log(data)
+            })
+        });
+    })
+</script>
+{% endblock %}
