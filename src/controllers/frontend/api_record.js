@@ -1,5 +1,6 @@
 
 const Mock = require('mockjs');
+import Model from '../../models/api_mock.model';
 
 class ApiRecord {
     static async apiReturn(ctx){
@@ -28,6 +29,20 @@ class ApiRecord {
         });
   
         return ctx.success({ msg:'获取成功',data: data }); //统一响应格式
+    }
+    static async apiMock(ctx){
+        let id=parseInt(ctx.params.id); //获取参数
+        let data=await Model.getDetail(id);
+        //var jsonObj=JSON.parse(data.code_rule.replace(/\n/g,"\\n").replace(/\r/g,"\\r"));   
+        try{
+            let _data=await Mock.mock( eval("(" + data.code_rule + ")"));
+            ctx.body=_data
+        }catch (err){
+            console.log(err)
+            ctx.body=err
+        }   
+        
+        
     }
 }
 
