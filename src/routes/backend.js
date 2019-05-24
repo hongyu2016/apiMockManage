@@ -13,4 +13,5 @@ router
     .get('/api-record/detail/:id',ApiRecord.getDetail)
     .get('/api-record/add',ApiRecord.add)
     .post('/api-record/addPost',ApiRecord.addPost)
+    .delete('/api-record/delete',ApiRecord.delete)
 module.exports = router;    

@@ -1,9 +1,13 @@
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif,"微软雅黑";
 }
-a {
-  color: #00B7FF;
-}
 .main-top{
   margin-bottom: 20px;
+}
+.layui-layer-btn .layui-layer-btn0{
+  color:#fff !important;
+}
+.goback{
+  margin-right: 20px;
+  cursor: pointer;
 }

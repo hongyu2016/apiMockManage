@@ -7,8 +7,22 @@
 {% endblock %}
 
 {% block main %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">主页</a></li>
+        <li class="breadcrumb-item"><a href="#">api管理</a></li>
+        <li class="breadcrumb-item active" aria-current="page">新增api</li>
+    </ol>
+</nav>
 <div class="border-bottom main-top">
-    <h2 class="h2">新增api</h2>
+    <h2 class="h2"><i class="fa fa-arrow-circle-left goback"></i>新增api</h2>
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>请注意：</strong>代码规则一定要输入正确的json字符串，否则将会无法使用，json结合mockjs使用，请参考：
+        <a href="http://mockjs.com/examples.html">mockjs使用</a>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
 </div>
 
 <form id="form">
@@ -34,9 +48,9 @@
     <div class="form-group row">
         <label for="rule" class="col-sm-2 col-form-label">代码规则预览</label>
         <div class="col-sm-10">
-                <pre class="beautify">
+            <pre class="beautify">
                     <code class="plaintext">{{code}}</code>
-                </pre> 
+                </pre>
         </div>
     </div>
 
@@ -53,32 +67,34 @@
 <script src="/plugins/highlight/highlight.pack.js"></script>{# 代码高亮 #}
 <!-- <script>hljs.initHighlightingOnLoad();</script> -->
 <script>
-    function beautify(){
+    function beautify() {
         document.querySelectorAll('.beautify .plaintext').forEach((block) => {
             hljs.highlightBlock(block);
         });
     }
     $(function () {
-        beautify()       
-        $('#rule').blur(function(){
-            var _data=$(this).val();
-            var $code=$('.beautify>code');
+        beautify()
+        $('#rule').blur(function () {
+            var _data = $(this).val();
+            var $code = $('.beautify>code');
             $code.html(_data);
             beautify()
         });
         $('.save').click(function (e) {
             e.preventDefault();
-            var id=$('#code_id').val();
+            var id = $('#code_id').val();
             var name = $('#name').val(),
                 remark = $('#remark').val(),
                 rule = $('#rule').val();
             $.post('./addPost', {
-                id:id,
+                id: id,
                 name: name,
                 remark: remark,
                 code_rule: rule
             }, function (data) {
-                console.log(data)
+                if (data.code == 200) {
+                    //window.location.href='/server/api-record/'
+                }
             })
         });
     })

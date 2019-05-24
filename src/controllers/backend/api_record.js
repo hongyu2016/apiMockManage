@@ -42,15 +42,26 @@ class ApiRecord{
      */
     static async addPost(ctx){
         let params=ctx.request.body;
-        let id=params.id;
+        let id=params.id;       
         params.update_time=new Date();
-        if(id){ //编辑
+        if(id){ //编辑           
             let data=await recordModel.edit(params);
             return ctx.success({ msg:'编辑成功',data: data }); 
+        }else{
+            params.create_time=new Date();          
+            let data=await recordModel.add(params);
+            return ctx.success({ msg:'新增成功',data: data }); 
         }
-        params.create_time=new Date();          
-        let data=await recordModel.add(params);
-        return ctx.success({ msg:'新增成功',data: data }); 
+        
+    }
+    /**
+     * 删除
+     */
+    static async delete(ctx){
+        let params=ctx.request.body;
+        let id=params.id;
+        let data=await recordModel.delete(id);
+        return ctx.success({ msg:'删除成功',data: data });       
     }
 }
 
