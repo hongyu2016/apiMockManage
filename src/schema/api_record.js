@@ -36,7 +36,7 @@ export default function (sequelize,DataTypes){
             type:DataTypes.DATE,
             field:'update_time',//需要查询的字段
             get(){
-                return moment(this.getDataValue('create_time')).format('YYYY-MM-DD HH:mm:ss'); //修正时区不对问题
+                return moment(this.getDataValue('update_time')).format('YYYY-MM-DD HH:mm:ss'); //修正时区不对问题
             }
         }
         
