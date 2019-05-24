@@ -15,6 +15,7 @@ class ApiRecord{
         let data=await recordModel.getDetail(id);
         await ctx.render('pages/api_record/detail', {
             detail: data,
+            hostname:ctx.host+'/api/api-record/api-mock/'+id,
             code:beautify(data.code_rule, { indent_size: 2, space_in_empty_paren: true }) //格式化代码
         })
     }

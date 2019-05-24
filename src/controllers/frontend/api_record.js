@@ -38,7 +38,7 @@ class ApiRecord {
             let _data=await Mock.mock( eval("(" + data.code_rule + ")"));
             ctx.body=_data
         }catch (err){
-            console.log(err)
+        
             ctx.body=err
         }   
         
