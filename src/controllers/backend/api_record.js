@@ -12,12 +12,13 @@ class ApiRecord{
         let totalPage = data.count % pageSize == 0 ? data.count / pageSize : Math.ceil(data.count / pageSize); //计算总页数
         
         let _data={
+            count:data.count,
             totalPages:totalPage,//总页数
             currentPage:currentPage //当前页
         }
         
         const paginationStr = pagination(_data, ctx, {
-            desc: false, //show description
+            desc: true, //show description
             pageNum: 2,
             url: '', //page url, when not set, it will auto generated
             class: 'justify-content-end', //pagenation extra class
@@ -25,7 +26,7 @@ class ApiRecord{
             text: {
                 next: '下一页',
                 prev: '上一页',
-                total: 'count: __COUNT__ , pages: __PAGE__'
+                total: '记录总数: __COUNT__ , 共有: __PAGE__ 页'
             }
         });
 

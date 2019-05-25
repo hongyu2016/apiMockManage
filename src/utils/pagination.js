@@ -90,7 +90,7 @@ module.exports = (pagerData, ctx, options) => {
   }
   if (options.desc) {
     const total = options.text.total.replace('__COUNT__', pagerData.count).replace('__PAGE__', pagerData.totalPages);
-    html += `<li class="disabled ${options.classLi}"><span>${total}</span></li>`;
+    html += `<li class="disabled ${options.classLi}"><span class="page-count">${total}</span></li>`;
   }
   if (currentPage > 1) {
     html += `<li class="prev ${options.classLi}"><a href="${pageUrl.replace('__PAGE__', currentPage - 1)}" class="page-link">${options.text.prev}</a></li>`;

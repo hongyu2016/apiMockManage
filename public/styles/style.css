@@ -11,3 +11,11 @@ body {
   margin-right: 20px;
   cursor: pointer;
 }
+.pagination .page-count{
+  display: flex;
+  height: 100%;
+  border: 1px solid #dee2e6;
+  vertical-align: middle;
+  align-items: center;
+  padding: 0 10px;
+}
