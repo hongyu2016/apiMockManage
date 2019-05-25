@@ -7,8 +7,11 @@ const Record=Sequelize.import('../schema/api_record.js');  //官方建议的做�
 
 class RecordModel{
     //列表
-    static async getList(){
-        return Record.findAll()
+    static async getList(page,pageSize){
+        return Record.findAndCountAll({
+            offset: (page - 1) * pageSize, 
+            limit: pageSize
+        })
     }
     //详情
     static async getDetail(id){
