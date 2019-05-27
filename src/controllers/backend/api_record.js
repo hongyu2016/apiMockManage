@@ -1,9 +1,14 @@
+import base from './base';
 const recordModel = require('../../models/api_record.model');
 const beautify = require('js-beautify').js;  //格式化代码
 const pagination = require('../../utils/pagination');
 //const pagination = require('think-pagination');
+
+import moment from 'moment'
 class ApiRecord{
+    
     static async getList(ctx){
+        
         let currentPage=ctx.query.page || 1;
         let pageSize=10;
 
@@ -32,7 +37,7 @@ class ApiRecord{
 
         await ctx.render('pages/api_record/list', {
             list: data.rows,
-            pagination:paginationStr      
+            pagination:paginationStr,
         })
  
         //返回json接口        
@@ -44,7 +49,8 @@ class ApiRecord{
         await ctx.render('pages/api_record/detail', {
             detail: data,
             hostname:ctx.host+'/api/api-record/api-mock/'+id,
-            code:beautify(data.code_rule, { indent_size: 2, space_in_empty_paren: true }) //格式化代码
+            code:beautify(data.code_rule, { indent_size: 2, space_in_empty_paren: true }), //格式化代码
+            active:'active'
         })
     }
     /**
@@ -72,7 +78,7 @@ class ApiRecord{
     static async addPost(ctx){
         let params=ctx.request.body;
         let id=params.id;       
-        params.update_time=new Date();
+        params.update_time=new Date(); 
         if(id){ //编辑           
             let data=await recordModel.edit(params);
             return ctx.success({ msg:'编辑成功',data: data }); 

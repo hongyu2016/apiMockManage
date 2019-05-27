@@ -13,7 +13,7 @@ module.exports={
             password:'root',
             database:'hong',
             host:'localhost'
-        }
+        }, 
     },
     //生产环境
     production:{
@@ -23,6 +23,6 @@ module.exports={
             password:'root',
             database:'hong',
             host:'localhost'
-        }
+        },
     }
 }

@@ -10,5 +10,8 @@ router.prefix('/api'); //路由前缀
 router
     .get('/list',ApiRecord.apiReturn)
     .get('/api-record/api-mock/:id',ApiRecord.apiMock)
+    .post('/api-record/api-mock/:id',ApiRecord.apiMock)
+    .delete('/api-record/api-mock/:id',ApiRecord.apiMock)
+    .put('/api-record/api-mock/:id',ApiRecord.apiMock)
 
 module.exports = router;

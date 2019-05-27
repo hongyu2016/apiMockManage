@@ -44,6 +44,22 @@ app.use(async (ctx, next) => {
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 })
 
+//添加全局通用数据
+app.use(async (ctx, next) => {
+  ctx.state = Object.assign(
+    ctx.state,
+    {
+       cssPath: '/styles/',
+       plugins: '/plugins/',
+       imgges: '/imgges',
+       js: 'js',
+       server:'/server/'
+    }
+    );
+  await next();
+})
+
+
 // routes
 /* app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods()) */
