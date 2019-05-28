@@ -12,6 +12,7 @@ const path=require('path')
 
 const response = require('./src/middlewares/response'); //统一响应处理，在路由前调用
 const Koa_Session = require('koa-session');   // 导入koa-session 
+
 const { backendRouter, frontendRouter } = require('./src/index');
 
 // 配置session
@@ -59,7 +60,6 @@ app.use(async (ctx, next) => {
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 })
 
-
 //添加全局通用数据
 app.use(async (ctx, next) => {
   ctx.state = Object.assign(
@@ -75,16 +75,35 @@ app.use(async (ctx, next) => {
   await next();
 })
 
+//定义允许直接访问的url
+const allowpage = ['/server/login','/server/dologin','/server/logout']
+//拦截
+function localFilter(ctx) {
+    let url = ctx.originalUrl
+    if (allowpage.indexOf(url) > -1) {
+        console.log('当前地址可直接访问')
+    }else {
+        if (JSON.stringify(ctx.session) == "{}") { //如果监测到session为空，则没有登录，跳转到登录页面
+          ctx.redirect('/server/login')
+        } 
+    }
+}
+
+
+//session拦截
+app.use(async (ctx, next) => {
+  localFilter(ctx)
+  await next()
+
+})
 
 // routes
 /* app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods()) */
+
 app.use(response)
 app.use(backendRouter.routes(),backendRouter.allowedMethods()) //back模块路由
 app.use(frontendRouter.routes(),frontendRouter.allowedMethods()) //front模块路由
-
-
-
 
 // error-handling
 app.on('error', (err, ctx) => {

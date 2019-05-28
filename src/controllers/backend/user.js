@@ -8,7 +8,7 @@ class UserControl {
     static async login(ctx) {
         await ctx.render('login',{
         })
-        console.log(ctx.session)
+        
     }
     /**
      * 登录
