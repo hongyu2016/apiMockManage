@@ -33,22 +33,44 @@
 </div>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-12">
-                <div class="card">
-                    <div class="card-body">
-                        api访问地址：{{hostname}}
-                    </div>
+        <!-- <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    api访问地址：{{hostname}}
                 </div>
-            
+            </div>
+
         </div>
         <div class="col-md-4">
             <p style="margin-top: 10px;">规则代码</p>
         </div>
         <div class="col-md-8">
             <pre class="beautify">
-                    <code class="plaintext">{{code}}</code>
-                </pre>
+                <code class="plaintext">{{code}}</code>
+            </pre>
+        </div> -->
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    api访问地址：<a href="http://{{hostname}}" target="_blank">{{hostname}}</a>
+                </div>
+                <div class="card-body">
+                    <blockquote class="blockquote mb-0">
+                        <p class="">mock规则代码：
+                            <span title="Source Title">
+                                支持 get,post,delete,put 请求方式，暂不支持参数的解析
+                            </span>
+                        </p>
+
+                        <pre class="beautify">
+                            <code class="plaintext">{{code}}</code>
+                        </pre>
+                    </blockquote>
+                </div>
+            </div>
         </div>
+
+
     </div>
 
 </div>

@@ -6,32 +6,37 @@ $(document).bind("ajaxSend", function () {
 }).bind("ajaxComplete", function () {
     layer.close(loading);
 });
-$(function () {
-    $('.goback').click(function () {
-        window.history.go(-1);
-    });
 
-    $('#logout').click(function () {
-        var id = $(this).attr('data-id');
-        layer.confirm('确定退出登录吗？', {
-            btn: ['确定', '取消'] //按钮
-        }, function () {
-            $.post('/server/logout', {}, function (data) {
-                if (data.code == 200) {
-                    layer.msg('退出成功', { icon: 1 });
-                    setTimeout(function () {
-                        window.location.href = '/server/login';
-                    }, 2000)
-                }else{
-                    layer.msg('服务器错误', { icon: 1 });
-                }
+(function ($) {
+    $(function () {
+        $('.goback').click(function () {
+            window.history.go(-1);
+        });
 
-            }, 'json')
+        $('#logout').click(function () {
+            var id = $(this).attr('data-id');
+            layer.confirm('确定退出登录吗？', {
+                btn: ['确定', '取消'] //按钮
+            }, function () {
+                $.post('/server/logout', {}, function (data) {
+                    if (data.code == 200) {
+                        layer.msg('退出成功', { icon: 1 });
+                        setTimeout(function () {
+                            window.location.href = '/server/login';
+                        }, 2000)
+                    } else {
+                        layer.msg('服务器错误', { icon: 1 });
+                    }
 
-        }, function () {
+                }, 'json')
+
+            }, function () {
+
+            });
 
         });
 
-    });
+    })
 
-})
+})(jQuery)
+

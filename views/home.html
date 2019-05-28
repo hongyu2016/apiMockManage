@@ -86,28 +86,22 @@
     <script src="{{plugins}}layer-v3.1.1/layer/layer.js"></script>
     <script src="{{js}}common.js"></script>
     <script>
-        $(function () {
-                   
-            //给当前菜单设置选中
-            
-            $('.caidan').each(function(index,item){
-                //如果是二级菜单例如列表下的新增，详情等，需要做兼容处理
-                var _link=$(this)[0].href;
-                var _location=window.location;
-                var newLocation=_location.toString().split("/");
-                var newLink=$(this)[0].href.split("/");
-                /* if(_link==window.location){
-                    $(this).addClass('active')
-                } */
-                
-                if(newLocation.indexOf(newLink[4])>1){
-                    $(this).addClass('active')
-                }
-    
-                
+        (function ($) {
+            $(function () {
+                //给当前菜单设置选中
+                $('.caidan').each(function (index, item) {
+                    //只适合一级菜单的情况
+                    var _link = $(this)[0].href;
+                    var _location = window.location.pathname;
+                    var newLocation = _location.toString().split("/");
+                    var newLink = $(this)[0].href.split("/");
+                    if (newLocation.indexOf(newLink[4]) > 1) {
+                        $(this).addClass('active')
+                    }
+                })
             })
 
-        });
+        })(jQuery)
     </script>
     {% block footer %}
 
