@@ -11,7 +11,26 @@ const nunjucks = require('koa-nunjucks-2') //对特殊字符进行转义，防�
 const path=require('path')
 
 const response = require('./src/middlewares/response'); //统一响应处理，在路由前调用
+const Koa_Session = require('koa-session');   // 导入koa-session 
 const { backendRouter, frontendRouter } = require('./src/index');
+
+// 配置session
+const session_signed_key = ["some secret hurr"];  // 这个是配合signed属性的签名key
+const session_config = {
+    key: 'sessionId', /**  cookie的key。 (默认是 koa:sess) */
+    maxAge: 1440000,   /**  session 过期时间，以毫秒ms为单位计算 。*/
+    autoCommit: true, /** 自动提交到响应头。(默认是 true) */
+    overwrite: true, /** 是否允许重写 。(默认是 true) */
+    httpOnly: true, /** 是否设置HttpOnly，如果在Cookie中设置了"HttpOnly"属性，那么通过程序(JS脚本、Applet等)将无法读取到Cookie信息，这样能有效的防止XSS攻击。  (默认 true) */
+    signed: true, /** 是否签名。(默认是 true) */
+    rolling: true, /** 是否每次响应时刷新Session的有效期。(默认是 false) */
+    renew: false, /** 是否在Session快过期时刷新Session的有效期。(默认是 false) */
+};
+
+const session = Koa_Session(session_config, app)
+app.keys = session_signed_key;
+app.use(session);
+
 
 // error handler
 onerror(app)
@@ -24,10 +43,6 @@ app.use(json())
 app.use(logger())
 app.use(require('koa-static')(__dirname + '/public'))
 
-/* app.use(views(__dirname + '/views', {
-  //extension: 'pug'
-  map : {html:'nunjucks'}
-})) */
 app.use(nunjucks({
   ext: 'html',
   path: path.join(__dirname, 'views'),// 指定视图目录
@@ -44,6 +59,7 @@ app.use(async (ctx, next) => {
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 })
 
+
 //添加全局通用数据
 app.use(async (ctx, next) => {
   ctx.state = Object.assign(
@@ -52,7 +68,7 @@ app.use(async (ctx, next) => {
        cssPath: '/styles/',
        plugins: '/plugins/',
        imgges: '/imgges',
-       js: 'js',
+       js: '/js/',
        server:'/server/'
     }
     );

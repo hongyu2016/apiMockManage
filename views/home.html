@@ -84,20 +84,10 @@
     <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
     <script src="{{plugins}}bootstrap4/js/bootstrap.min.js"></script>
     <script src="{{plugins}}layer-v3.1.1/layer/layer.js"></script>
+    <script src="{{js}}common.js"></script>
     <script>
         $(function () {
-            var loading;            
-            $('.goback').click(function () {
-                window.history.go(-1);
-            });
-            //全局ajaxloading配置
-            //不想loading的请求加：global: false
-            $(document).bind("ajaxSend", function () {
-                loading=layer.load(2, {shade: true});
-            }).bind("ajaxComplete", function () {
-                layer.close(loading);
-            });
-       
+                   
             //给当前菜单设置选中
             
             $('.caidan').each(function(index,item){

@@ -95,17 +95,18 @@
         $('.save').click(function (e) {
             e.preventDefault();
             var id = $('#code_id').val();
-            var requestType=$('#requestType').val()
-            var name = $('#name').val(),
-                remark = $('#remark').val(),
+            var name = $.trim($('#name').val()),
+                remark = $.trim($('#remark').val()),
                 rule = $('#rule').val();
-
+            if (!name || !remark || !rule) {
+                layer.msg('请输入完整信息');
+                return false
+            }
             $.post('./addPost', {
                 id: id,
                 name: name,
                 remark: remark,
                 code_rule: rule,
-                requestType:requestType
             }, function (data) {
                 if (data.code == 200) {
                     window.location.href = '/server/api-record/'

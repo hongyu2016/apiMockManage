@@ -5,9 +5,10 @@ const pagination = require('../../utils/pagination');
 //const pagination = require('think-pagination');
 
 import moment from 'moment'
-class ApiRecord{
+class ApiRecord extends base{
     
     static async getList(ctx){
+        console.log(ctx.session)
         
         let currentPage=ctx.query.page || 1;
         let pageSize=10;
