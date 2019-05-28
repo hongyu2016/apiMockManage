@@ -27,11 +27,9 @@ const session_config = {
     rolling: true, /** 是否每次响应时刷新Session的有效期。(默认是 false) */
     renew: false, /** 是否在Session快过期时刷新Session的有效期。(默认是 false) */
 };
-
 const session = Koa_Session(session_config, app)
 app.keys = session_signed_key;
 app.use(session);
-
 
 // error handler
 onerror(app)
@@ -89,19 +87,14 @@ function localFilter(ctx) {
     }
 }
 
-
 //session拦截
 app.use(async (ctx, next) => {
   localFilter(ctx)
   await next()
-
 })
 
 // routes
-/* app.use(index.routes(), index.allowedMethods())
-app.use(users.routes(), users.allowedMethods()) */
-
-app.use(response)
+app.use(response) //统一响应格式
 app.use(backendRouter.routes(),backendRouter.allowedMethods()) //back模块路由
 app.use(frontendRouter.routes(),frontendRouter.allowedMethods()) //front模块路由
 
