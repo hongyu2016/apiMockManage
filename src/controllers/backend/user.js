@@ -31,7 +31,7 @@ class UserControl {
     static async logout(ctx){
         ctx.session = null;//清除会话
         //ctx.session.logged = false;
-        return ctx.success({ msg:'推出成功',data: [] }); 
+        return ctx.success({ msg:'退出成功',data: [] }); 
     }
 }
 
