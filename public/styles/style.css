@@ -1,6 +1,21 @@
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif,"微软雅黑";
 }
+*{
+  margin: 0;
+  padding: 0
+}
+ul,li{
+  margin: 0;
+  padding: 0;
+  list-style: none
+}
+.main{
+  height: 100vh;
+}
+.sidebar{
+  /* position: relative */
+}
 .main-top{
   margin-bottom: 20px;
 }
@@ -24,3 +39,35 @@ body {
   padding: 0 10px;
 }
 
+.main-iframe{
+  position: relative;
+}
+.main-iframe .iframe-item {
+  overflow: auto;
+  display: none;
+}
+.main-iframe .iframe-item.active{
+  display: block
+}
+.iframe-content {
+  width: 100%;
+  height: 100vh;
+}
+
+.tabs-group{
+  height: 50px;
+}
+.tabs-group li{
+  border: 1px solid #ddd;
+  padding: 5px 10px;
+  border-right-color: transparent;
+}
+.tabs-group li.active{
+  background-color:#ccc 
+}
+.tabs-group li:last-child{
+  border-right-color:#ddd;
+}
+.tabs-group li .close-iframe{
+  cursor: pointer;
+}

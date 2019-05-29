@@ -8,13 +8,14 @@ router.prefix('/server'); //路由前缀
 
 router
     .get('/',Index.index)
-
+    .get('/index',Index.index2)
+    .get('/test',Index.test)
     .get('/login',User.login)
     .post('/dologin',User.dologin)
     .post('/logout',User.logout)
 
     //.get('/list',BackendArticle.getList)
-    
+
     .get('/api-record',ApiRecord.getList)
     .get('/api-record/detail/:id',ApiRecord.getDetail)
     .get('/api-record/add',ApiRecord.add)

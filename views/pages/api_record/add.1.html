@@ -1,0 +1,118 @@
+{% extends 'home.html' %}
+{% block title %} api管理 {% endblock %}
+
+{% block head %}
+<link href="/plugins/highlight/styles/default.css" rel="stylesheet" />
+
+{% endblock %}
+
+{% block main %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{server}}">主页</a></li>
+        <li class="breadcrumb-item"><a href="{{server}}api-record">api管理</a></li>
+        <li class="breadcrumb-item active" aria-current="page">新增api</li>
+    </ol>
+</nav>
+<div class="border-bottom main-top">
+    <h2 class="h2"><i class="fa fa-arrow-circle-left goback"></i>新增api</h2>
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>请注意：</strong>代码规则一定要输入正确的json字符串，否则将会无法使用，json结合mockjs使用，请参考：
+        <a href="http://mockjs.com/examples.html" target="_blank">mockjs使用</a>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+</div>
+
+<form id="form">
+    <input type="hidden" id="code_id" value="{{detail.id}}" />
+    <div class="form-group row">
+        <label for="name" class="col-sm-2 col-form-label">名称</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="name" name="name" placeholder="" value="{{detail.name}}">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="name" class="col-sm-2 col-form-label">请求方式</label>
+        <div class="col-sm-10">
+            <p style="margin-bottom: 0">支持 get,post,delete,put 请求方式，暂不支持参数的解析</p>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="remark" class="col-sm-2 col-form-label">备注</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="remark" name="remark" placeholder="" value="{{detail.remark}}">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="rule" class="col-sm-2 col-form-label">代码规则</label>
+        <div class="col-sm-10">
+            <textarea class="form-control" id="rule" name="rule" rows="10" placeholder="{
+                code: 200,
+                msg: '成功',
+                data: {
+                  list: []
+                }
+            }">{{code}}</textarea>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="rule" class="col-sm-2 col-form-label">代码规则预览</label>
+        <div class="col-sm-10">
+            <pre class="beautify">
+                    <code class="plaintext">{{code}}</code>
+                </pre>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-10">
+            <button type="submit" class="btn btn-primary save">保存</button>
+        </div>
+    </div>
+</form>
+
+{% endblock %}
+
+{% block footer %}
+<script src="/plugins/highlight/highlight.pack.js"></script>{# 代码高亮 #}
+<!-- <script>hljs.initHighlightingOnLoad();</script> -->
+<script>
+    function beautify() {
+        document.querySelectorAll('.beautify .plaintext').forEach((block) => {
+            hljs.highlightBlock(block);
+        });
+    }
+    $(function () {
+        beautify()
+        $('#rule').blur(function () {
+            var _data = $(this).val();
+            var $code = $('.beautify>code');
+            $code.html(_data);
+            beautify()
+        });
+        $('.save').click(function (e) {
+            e.preventDefault();
+            var id = $('#code_id').val();
+            var name = $.trim($('#name').val()),
+                remark = $.trim($('#remark').val()),
+                rule = $('#rule').val();
+            if (!name || !remark || !rule) {
+                layer.msg('请输入完整信息');
+                return false
+            }
+            $.post('./addPost', {
+                id: id,
+                name: name,
+                remark: remark,
+                code_rule: rule,
+            }, function (data) {
+                if (data.code == 200) {
+                    window.location.href = '/server/api-record/'
+                }
+            })
+        });
+    })
+</script>
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends 'home.html' %}
+{% block title %} api管理 {% endblock %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block main %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{server}}">主页</a></li>
+        <li class="breadcrumb-item active"><a href="{{server}}api-record">api管理</a></li>        
+    </ol>
+</nav>
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+    <h2 class="h2">列表</h2>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <div class="btn-group mr-2">
+            <a class="btn btn-sm btn-outline-secondary" href="{{server}}api-record/add">新增</a>
+            <button class="btn btn-sm btn-outline-secondary">导出</button>
+        </div>
+
+    </div>
+</div>
+
+{# <h2>二级标题</h2> #}
+<div class="table-responsive">
+    <table class="table table-striped table-sm table-bordered">
+        <thead>
+            <tr>
+                <th>序号</th>
+                <th>名称</th>
+                <th>备注</th>
+                <th>创建时间</th>
+                <th>更新时间</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in list %}
+            <tr>
+                <td>{{loop.index}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.remark}}</td>
+                <td>{{item.create_time}}</td>
+                <td>{{item.update_time}}</td>
+                <td>
+                    <button class="btn btn-sm btn-danger delete" data-id="{{item.id}}">删除</button>
+                    <a class="btn btn-sm btn-warning" href="{{server}}api-record/add?id={{item.id}}">编辑</a>
+                    <a class="btn btn-sm btn-outline-secondary" href="{{server}}api-record/detail/{{item.id}}">详情</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+   
+    {{ pagination | safe}}
+</div>
+{% endblock %}
+
+{% block footer %}
+<script>
+    $(function () {
+        $('.delete').click(function () {
+            var id = $(this).attr('data-id');
+            layer.confirm('确定删除该记录吗？', {
+                btn: ['确定', '取消'] //按钮
+            }, function () {
+                $.ajax({
+                    url: '/server/api-record/delete',
+                    type: 'delete',
+                    data: {
+                        id: id
+                    },
+                    success: function (result) {
+                        layer.msg('删除成功', { icon: 1 });
+                        setTimeout(function () {
+                            window.location.reload();
+                        }, 2000)
+                    }
+                });
+
+            }, function () {
+
+            });
+
+        });
+    });
+</script>
+{% endblock %}

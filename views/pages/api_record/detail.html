@@ -1,111 +1,120 @@
-{% extends 'home.html' %}
-{% block title %} api管理 {% endblock %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block head %}
-<link href="/plugins/highlight/styles/default.css" rel="stylesheet" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>详情</title>
+    <link href="/plugins/highlight/styles/default.css" rel="stylesheet" />
+    <link href="{{plugins}}bootstrap4/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="{{plugins}}font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="{{cssPath}}dashboard.css" rel="stylesheet" />
+    <link href="{{cssPath}}style.css" rel="stylesheet" />
+</head>
 
-{% endblock %}
-
-{% block main %}
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{server}}">主页</a></li>
-        <li class="breadcrumb-item"><a href="{{server}}api-record">api管理</a></li>
-        <li class="breadcrumb-item active" aria-current="page">详情</li>
-    </ol>
-</nav>
-<div class="border-bottom main-top">
-    <div class="row">
-        <div class="col-md-8">
-            <h1><i class="fa fa-arrow-circle-left goback"></i>{{detail.name}}</h1>
-            <p>{{detail.update_time}}</p>
-        </div>
-        <div class="col-md-4">
-            <div class="btn-toolbar mb-2 mb-md-0 float-right">
-                <div class="btn-group mr-2">
-                    <a class="btn btn-sm btn-danger" href="{{server}}api-record/add?id={{detail.id}}">编辑</a>
-                    <button class="btn btn-sm btn-outline-secondary delete">删除</button>
+<body>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{server}}">主页</a></li>
+            <li class="breadcrumb-item"><a href="{{server}}api-record">api管理</a></li>
+            <li class="breadcrumb-item active" aria-current="page">详情</li>
+        </ol>
+    </nav>
+    <div class="border-bottom main-top">
+        <div class="row">
+            <div class="col-md-8">
+                <h1><i class="fa fa-arrow-circle-left goback"></i>{{detail.name}}</h1>
+                <p>{{detail.update_time}}</p>
+            </div>
+            <div class="col-md-4">
+                <div class="btn-toolbar mb-2 mb-md-0 float-right">
+                    <div class="btn-group mr-2">
+                        <a class="btn btn-sm btn-danger" href="{{server}}api-record/add?id={{detail.id}}">编辑</a>
+                        <button class="btn btn-sm btn-outline-secondary delete">删除</button>
+                    </div>
                 </div>
             </div>
         </div>
+
     </div>
-
-</div>
-<div class="container-fluid">
-    <div class="row">
-        <!-- <div class="col-md-12">
-            <div class="card">
-                <div class="card-body">
-                    api访问地址：{{hostname}}
-                </div>
-            </div>
-
-        </div>
-        <div class="col-md-4">
-            <p style="margin-top: 10px;">规则代码</p>
-        </div>
-        <div class="col-md-8">
-            <pre class="beautify">
-                <code class="plaintext">{{code}}</code>
-            </pre>
-        </div> -->
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    api访问地址：<a href="http://{{hostname}}" target="_blank">{{hostname}}</a>
-                </div>
-                <div class="card-body">
-                    <blockquote class="blockquote mb-0">
-                        <p class="">mock规则代码：
-                            <span title="Source Title">
-                                支持 get,post,delete,put 请求方式，暂不支持参数的解析
-                            </span>
-                        </p>
-
+    <div class="container-fluid">
+        <div class="row">
+            <!-- <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                api访问地址：{{hostname}}
+                            </div>
+                        </div>
+            
+                    </div>
+                    <div class="col-md-4">
+                        <p style="margin-top: 10px;">规则代码</p>
+                    </div>
+                    <div class="col-md-8">
                         <pre class="beautify">
                             <code class="plaintext">{{code}}</code>
                         </pre>
-                    </blockquote>
+                    </div> -->
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        api访问地址：<a href="http://{{hostname}}" target="_blank">{{hostname}}</a>
+                    </div>
+                    <div class="card-body">
+                        <blockquote class="blockquote mb-0">
+                            <p class="">mock规则代码：
+                                <span title="Source Title">
+                                    支持 get,post,delete,put 请求方式，暂不支持参数的解析
+                                </span>
+                            </p>
+
+                            <pre class="beautify">
+                                        <code class="plaintext">{{code}}</code>
+                                    </pre>
+                        </blockquote>
+                    </div>
                 </div>
             </div>
+
+
         </div>
 
-
     </div>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+    <script src="{{plugins}}bootstrap4/js/bootstrap.min.js"></script>
+    <script src="{{plugins}}layer-v3.1.1/layer/layer.js"></script>
+    <script src="{{js}}common.js"></script>
+    <script src="/plugins/highlight/highlight.pack.js"></script>{# 代码高亮 #}
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>
+        $(function () {
+            $('.delete').click(function () {
+                var id = $(this).attr('data-id');
+                layer.confirm('确定删除该记录吗？', {
+                    btn: ['确定', '取消'] //按钮
+                }, function () {
+                    $.ajax({
+                        url: '/server/api-record/delete',
+                        type: 'delete',
+                        data: {
+                            id: id
+                        },
+                        success: function (result) {
+                            layer.msg('删除成功', { icon: 1 });
+                            setTimeout(function () {
+                                window.history.go(-1);
+                            }, 2000)
+                        }
+                    });
 
-</div>
+                }, function () {
 
-{% endblock %}
-
-{% block footer %}
-<script src="/plugins/highlight/highlight.pack.js"></script>{# 代码高亮 #}
-<script>hljs.initHighlightingOnLoad();</script>
-<script>
-    $(function () {
-        $('.delete').click(function () {
-            var id = $(this).attr('data-id');
-            layer.confirm('确定删除该记录吗？', {
-                btn: ['确定', '取消'] //按钮
-            }, function () {
-                $.ajax({
-                    url: '/server/api-record/delete',
-                    type: 'delete',
-                    data: {
-                        id: id
-                    },
-                    success: function (result) {
-                        layer.msg('删除成功', { icon: 1 });
-                        setTimeout(function () {
-                            window.history.go(-1);
-                        }, 2000)
-                    }
                 });
 
-            }, function () {
-
             });
+        })
+    </script>
+</body>
 
-        });
-    })
-</script>
-{% endblock %}
+</html>
