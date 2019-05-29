@@ -15,6 +15,7 @@ ul,li{
 }
 .sidebar{
   /* position: relative */
+  top:40px;
 }
 .main-top{
   margin-bottom: 20px;
@@ -61,6 +62,7 @@ ul,li{
   border: 1px solid #ddd;
   padding: 5px 10px;
   border-right-color: transparent;
+  cursor: default
 }
 .tabs-group li.active{
   background-color:#ccc 
