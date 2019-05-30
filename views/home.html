@@ -107,6 +107,22 @@
                     var $iframe = $('.iframe-item');
                     $(this).addClass('active').siblings().removeClass('active');
                     $('#content-' + id).addClass('active').siblings().removeClass('active');
+
+                    //重新给菜单添加选中
+                    $('.caidan').each(function (index, item) {
+                        $(item).removeClass('active');
+                        var $li = $('#tab-ul > li');
+                        var _id = $(item).attr('id');
+                        $li.each(function (j, v) {
+                            if ($(v).hasClass('active')) {
+                                var id = $(v).attr('data-id');
+                                if (_id == id) {
+                                    $(item).addClass('active');
+                                }
+                            }
+                        })
+
+                    })
                 });
 
                 //关闭tab
@@ -143,7 +159,7 @@
                                 }
                             }
                         })
-                        
+
                     })
 
                 });
