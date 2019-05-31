@@ -87,15 +87,18 @@
     <script src="{{js}}common.js"></script>
     <script>
         $(function () {
-            
+            if (self != top) {
+                //如果在iframe中则需要刷新父页面
+                parent.location.reload();
+            }
             $('.save').click(function (e) {
                 e.preventDefault();
                 var name = $('#user').val(),
-                password = $('#password').val();
-                if(!name || !password){
+                    password = $('#password').val();
+                if (!name || !password) {
                     layer.msg('请输入用户名或密码');
                     return false
-                }  
+                }
                 $.post('{{server}}dologin', {
                     name: name,
                     password: $.md5(password),
@@ -105,9 +108,9 @@
                         setTimeout(() => {
                             window.location.href = '{{server}}'
                         }, 2000);
-                        
-                        
-                    }else{
+
+
+                    } else {
                         layer.msg(data.msg);
                     }
                 })

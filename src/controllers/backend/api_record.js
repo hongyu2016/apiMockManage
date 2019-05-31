@@ -109,6 +109,7 @@ class ApiRecord extends base{
         if (JSON.stringify(ctx.session) == "{}") {
             return ctx.success({code:401, msg:'你还没有登录' });  
         }
+        
         let params=ctx.request.body;
         let id=params.id;
         let data=await recordModel.delete(id);

@@ -88,14 +88,16 @@
                                 setTimeout(function () {
                                     window.location.reload();
                                 }, 2000)
-                            } else {
+                            } 
+                            if (data.code == 401) {
                                 layer.msg(data.msg, { icon: 1 });
                                 setTimeout(function () {
 
                                     window.location.href = '{{server}}login'
                                     parent.location.reload();
                                 }, 2000)
-                            }
+                              
+                            } 
 
                         }
                     });
