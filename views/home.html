@@ -187,6 +187,7 @@
                 function checkSession(){
                     //parent.location.reload() 
                     var sessionId=$.cookie('sessionId');
+
                     if(!sessionId){
                         window.location.href="{{server}}login"
                     }

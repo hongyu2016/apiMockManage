@@ -4,8 +4,7 @@ module.exports=async (ctx,next)=>{
         '/server/dologin', 
         '/server/logout',
         '/server/api-record/delete',
-        '/api-record/addPost',
-        '/api-record/add',
+        '/api-record/addPost'
     ];
  
     let url = ctx.originalUrl 

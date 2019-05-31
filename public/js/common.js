@@ -2,7 +2,7 @@ var loading;
 //全局ajaxloading配置
 //不想loading的请求加：global: false
 $(document).bind("ajaxSend", function () {
-    loading = layer.load(2, { shade: true });
+    loading = layer.load(2, { shade: false });
 }).bind("ajaxComplete", function () {
     layer.close(loading);
 });
