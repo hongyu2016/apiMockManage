@@ -5,11 +5,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{% block title %} 首页 {% endblock %}</title>
+    <title>{% block title %} 管理后台 {% endblock %}</title>
     <link href="{{plugins}}bootstrap4/css/bootstrap.min.css" rel="stylesheet" />
     <link href="{{plugins}}font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
     <link href="{{cssPath}}dashboard.css" rel="stylesheet" />
     <link href="{{cssPath}}style.css" rel="stylesheet" />
+    <style>
+        /*css代码*/
+        #menu {
+            display: none;
+            width: 80px;
+            padding: 10px;
+            box-shadow: 0 1px 1px #888, 1px 0 1px #ccc;
+            position: absolute;
+            z-index: 1000;
+            background-color: #fff;
+        }
+
+        #menu .menu-item {
+            padding: 5px;
+            cursor: pointer;
+        }
+    </style>
     {% block head %} {% endblock %}
 </head>
 
@@ -35,28 +52,34 @@
                     </li>
 
                 </ul>
+                <!--自定义右键菜单html代码-->
+                <div id="menu">
+                    <div class="menu-item refrersh">刷新</div>
+                </div>
             </div>
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
                 <div class="main-iframe" id="main-iframe">
                     <div class="iframe-item active" id="content-index" data-id="index">
-                        <iframe src="{{server}}index" frameborder="0" class="iframe-content"></iframe>
+                        <iframe src="{{server}}index" frameborder="0" class="iframe-content" id="abc"></iframe>
                     </div>
 
                 </div>
 
             </main>
 
-
         </div>
     </div>
 
+
     <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
     <script src="{{plugins}}bootstrap4/js/bootstrap.min.js"></script>
+    <script src="{{plugins}}jquery.cookie.js"></script>
     <script src="{{plugins}}layer-v3.1.1/layer/layer.js"></script>
     <script src="{{js}}common.js"></script>
     <script>
-        (function ($) {
+        (function ($,window) {
             $(function () {
+
                 //给当前菜单设置选中
                 /* $('.caidan').each(function (index, item) {
                     //只适合一级菜单的情况
@@ -73,6 +96,7 @@
                 var $tabUl = $('#tab-ul');
                 var $iframe = $('#main-iframe');
                 $caidan.click(function () {
+                    checkSession();//检测session是否有效
                     $caidan.removeClass('active');
                     $(this).addClass('active');
                     var url = $(this).attr('data-href');
@@ -97,37 +121,28 @@
                     }
 
                     $tabUl.append(tabStr);
-                    $iframe.append(iframeStr)
-
+                    $iframe.append(iframeStr);
+                    document.title = name;
+                    com.closeMenu();//动态添加的iframe需要重新绑定关闭事件
                 })
 
                 //切换tab
                 $(document).on('click', '#tab-ul>li', function () {
+                    checkSession();//检测session是否有效
                     var id = $(this).attr('data-id');
                     var $iframe = $('.iframe-item');
+                    var name = $(this).text();
                     $(this).addClass('active').siblings().removeClass('active');
                     $('#content-' + id).addClass('active').siblings().removeClass('active');
-
                     //重新给菜单添加选中
-                    $('.caidan').each(function (index, item) {
-                        $(item).removeClass('active');
-                        var $li = $('#tab-ul > li');
-                        var _id = $(item).attr('id');
-                        $li.each(function (j, v) {
-                            if ($(v).hasClass('active')) {
-                                var id = $(v).attr('data-id');
-                                if (_id == id) {
-                                    $(item).addClass('active');
-                                }
-                            }
-                        })
-
-                    })
+                    forMenu();
+                    document.title = name;
                 });
 
                 //关闭tab
                 $(document).on('click', '.close-iframe', function (e) {
                     e.stopPropagation()
+                    checkSession()// 检测session是否有效
                     //删除相应的tab和iframe
                     //分关闭当前选中和关闭未选中两种情况
                     var $li = $(this).closest('li');
@@ -147,6 +162,11 @@
                         _type = 0;
                     }
                     //重新给菜单添加选中
+                    forMenu();
+                });
+
+                //重新给左侧菜单选中
+                function forMenu() {
                     $('.caidan').each(function (index, item) {
                         $(item).removeClass('active');
                         var $li = $('#tab-ul > li');
@@ -161,12 +181,53 @@
                         })
 
                     })
+                }
 
-                });
-
+                //检测session有没有过期，有则刷新主窗口
+                function checkSession(){
+                    //parent.location.reload() 
+                    var sessionId=$.cookie('sessionId');
+                    if(!sessionId){
+                        window.location.href="{{server}}login"
+                    }
+                }
             })
 
-        })(jQuery)
+        })(jQuery,window)
+    </script>
+    <script>
+            (function ($,window) {
+                $(function () {
+
+                    $(document).delegate('#tab-ul li', 'contextmenu', function (e) {
+                        //e.stopPropagation();
+                        //取消默认的浏览器自带右键
+                        e.preventDefault();
+                        var $menu = $("#menu");
+                        var id = $(this).attr('data-id')
+                        //根据事件对象中鼠标点击的位置，进行定位
+                        var left = $(this);
+                        $menu.css({
+                            left: left[0].offsetLeft + 'px',
+                            top: '40px',
+                            display: 'block'
+                        });
+                        //刷新当前页面操作
+                        $('.refrersh').click(function () {
+                            $('#content-' + id).find('iframe')[0].contentWindow.location.reload(true);//刷新页面
+                            //$('#content-'+id).find('iframe').contents()  获取内容
+
+                        });
+                    })
+                    //关闭
+                    window.onclick = function () {
+                        $('#menu').hide();
+                    }
+                    com.closeMenu();
+                    
+                })
+            })(jQuery,window)
+
     </script>
     {% block footer %}
 

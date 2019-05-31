@@ -14,8 +14,6 @@ router
     .post('/dologin',User.dologin)
     .post('/logout',User.logout)
 
-    //.get('/list',BackendArticle.getList)
-
     .get('/api-record',ApiRecord.getList)
     .get('/api-record/detail/:id',ApiRecord.getDetail)
     .get('/api-record/add',ApiRecord.add)

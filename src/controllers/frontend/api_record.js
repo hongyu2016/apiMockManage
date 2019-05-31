@@ -31,6 +31,7 @@ class ApiRecord {
         return ctx.success({ msg:'获取成功',data: data }); //统一响应格式
     }
     static async apiMock(ctx){
+        const Random = Mock.Random;
         let id=parseInt(ctx.params.id); //获取参数
         let data=await Model.getDetail(id);
         //var jsonObj=JSON.parse(data.code_rule.replace(/\n/g,"\\n").replace(/\r/g,"\\r"));   
@@ -39,7 +40,9 @@ class ApiRecord {
             ctx.body=_data
         }catch (err){
         
-            ctx.body=err
+            ctx.body={
+                msg:'代码规则错误，请检查再试'
+            }
         }   
         
         

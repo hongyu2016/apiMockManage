@@ -20,6 +20,7 @@ class UserControl {
         if(data){
             ctx.session.logged = true;//设置登录状态
             return ctx.success({ msg:'登录成功',data: [] }); //统一响应格式
+            
         }else{
             ctx.session.logged = false;
             return ctx.success({ msg:'用户名或密码错误',data: [],code:0 }); //统一响应格式

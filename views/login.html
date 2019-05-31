@@ -87,6 +87,7 @@
     <script src="{{js}}common.js"></script>
     <script>
         $(function () {
+            
             $('.save').click(function (e) {
                 e.preventDefault();
                 var name = $('#user').val(),
@@ -100,9 +101,11 @@
                     password: $.md5(password),
                 }, function (data) {
                     if (data.code == 200) {
+                        layer.msg(data.msg);
                         setTimeout(() => {
                             window.location.href = '{{server}}'
-                        }, 2);
+                        }, 2000);
+                        
                         
                     }else{
                         layer.msg(data.msg);

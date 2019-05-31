@@ -94,6 +94,10 @@ class ApiRecord extends base{
      * 删除
      */
     static async delete(ctx){
+        if (JSON.stringify(ctx.session) == "{}") {
+            return ctx.success({code:401, msg:'删除失败' });  
+        }
+        
         let params=ctx.request.body;
         let id=params.id;
         let data=await recordModel.delete(id);

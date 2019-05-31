@@ -40,3 +40,19 @@ $(document).bind("ajaxSend", function () {
 
 })(jQuery)
 
+var com = (function CoolModule() {
+    //点击iframe关闭
+    function closeMenu() {
+        $('.iframe-content').on('load', function (event) {//判断 iframe是否加载完成  这一步很重要
+            console.log(this.contentDocument)
+            $(this.contentDocument).click(function () {//添加点击事件
+                $('#menu').hide();
+            });
+        });
+    }
+    return {
+        closeMenu: closeMenu
+    };
+
+})()
+

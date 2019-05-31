@@ -62,14 +62,24 @@ ul,li{
   border: 1px solid #ddd;
   padding: 5px 10px;
   border-right-color: transparent;
-  cursor: default
+  cursor: default;
+  color: #333;
+  cursor: pointer;
 }
+
 .tabs-group li.active{
-  background-color:#ccc 
+  background-color:#343a40;
+  color:#fff
 }
 .tabs-group li:last-child{
   border-right-color:#ddd;
 }
 .tabs-group li .close-iframe{
   cursor: pointer;
+  margin-left: 10px;
+  transition: all 0.3s
 }
+.tabs-group li .close-iframe:hover{
+  transform: scale(1.3);
+}
+
