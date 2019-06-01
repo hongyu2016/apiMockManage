@@ -286,6 +286,8 @@
                     var iframeStr = []
                     var _tab = JSON.parse($.cookie('menuList'));
                     var _iframe = JSON.parse($.cookie('iframeList'));
+                    var $caidan = $('.caidan');
+
                     for (var i = 0; i < _tab.length; i++) {
                         if (_tab[i].active) {
                             tabStr.push('<li class="tab-li float-left active" ifram-id="' + _tab[i]['iframe-id'] + '"  data-id="' + _tab[i]['data-id'] + '" id="' + _tab[i].id + '">');//tab
@@ -297,16 +299,29 @@
                         }
 
                         tabStr.push('<span>' + _tab[i].name + '</span>');
-                        tabStr.push('<i class="fa fa-times close-iframe"></i>');
+                        if (_tab[i]['data-id'] !== 'index') {
+                            tabStr.push('<i class="fa fa-times close-iframe"></i>');
+                        }
+
                         tabStr.push('</li>');
 
                         iframeStr.push('<iframe src="' + _iframe[i].src + '" frameborder="0" class="iframe-content"></iframe>');
                         iframeStr.push('</div>');
+                        //设置左侧菜单选中
+                        for (var j = 0; j < $caidan.length; j++) {
+                            if (_tab[i].active) {
+                                if (_tab[i]['data-id'] == $($caidan[j]).attr('id')) {
+                                    $($caidan[j]).addClass('active');
+                                    
+                                }
+                            }
 
+                        }
                     }
 
                     $tabUl.html(tabStr.join(''))
                     $iframe.html(iframeStr.join(''))
+
                 })()
 
             })
