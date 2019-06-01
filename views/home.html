@@ -265,7 +265,7 @@
                         'iframe-id': '/server/index',
                         'data-id': 'index',
                         'id': 'tab-index',
-                        'name':'首页',
+                        'name': '首页',
                         'active': true,
                     }];//存进cookie
                     var iframeList = [{
@@ -281,27 +281,32 @@
 
                     //页面初始化读取cookie，如果有页签则渲染出来
                     var $tabUl = $('#tab-ul');
+                    var $iframe = $('#main-iframe');
                     var tabStr = []
-                    if (!$.cookie('menuList')) {
-                        return false
-                    }
+                    var iframeStr = []
                     var _tab = JSON.parse($.cookie('menuList'));
-                    
-                    var _iframe = $.cookie('iframeList') && JSON.parse($.cookie('iframeList'));
+                    var _iframe = JSON.parse($.cookie('iframeList'));
                     for (var i = 0; i < _tab.length; i++) {
-                        if(_tab[i].active){
-                            tabStr.push('<li class="tab-li float-left active" ifram-id="'+ _tab[i]['iframe-id']+'"  data-id="'+ _tab[i]['data-id'] +'" id="'+ _tab[i].id +'">');
+                        if (_tab[i].active) {
+                            tabStr.push('<li class="tab-li float-left active" ifram-id="' + _tab[i]['iframe-id'] + '"  data-id="' + _tab[i]['data-id'] + '" id="' + _tab[i].id + '">');//tab
+                            iframeStr.push('<div class="iframe-item active" id="' + _iframe[i].id + '">');//iframe
 
-                        }else{
-                            tabStr.push('<li class="tab-li float-left" ifram-id="'+ _tab[i]['iframe-id']+'"  data-id="'+ _tab[i]['data-id'] +'" id="'+ _tab[i].id +'">');
+                        } else {
+                            tabStr.push('<li class="tab-li float-left" ifram-id="' + _tab[i]['iframe-id'] + '"  data-id="' + _tab[i]['data-id'] + '" id="' + _tab[i].id + '">');
+                            iframeStr.push('<div class="iframe-item" id="' + _iframe[i].id + '">');
                         }
-                        
 
                         tabStr.push('<span>' + _tab[i].name + '</span>');
                         tabStr.push('<i class="fa fa-times close-iframe"></i>');
                         tabStr.push('</li>');
+
+                        iframeStr.push('<iframe src="' + _iframe[i].src + '" frameborder="0" class="iframe-content"></iframe>');
+                        iframeStr.push('</div>');
+
                     }
+
                     $tabUl.html(tabStr.join(''))
+                    $iframe.html(iframeStr.join(''))
                 })()
 
             })
