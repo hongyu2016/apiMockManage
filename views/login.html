@@ -74,7 +74,7 @@
         <input type="password" id="password" class="form-control" placeholder="密码" required>
         <div class="checkbox mb-3 text-left">
             <label>
-                <input type="checkbox" value="remember-me">记住我
+                <input type="checkbox" class="remember" value="">记住我
             </label>
         </div>
         <button class="btn btn-lg btn-primary btn-block save" type="submit">登录</button>
@@ -84,12 +84,16 @@
     <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
     <script src="{{plugins}}layer-v3.1.1/layer/layer.js"></script>
     <script src="{{plugins}}jQuery.md5.js"></script>
+    <script src="{{plugins}}jquery.cookie.js"></script>
     <script src="{{js}}common.js"></script>
     <script>
         $(function () {
             if (self != top) {
                 //如果在iframe中则需要刷新父页面
                 parent.location.reload();
+            }
+            if($.cookie('loginName')){
+                $('#user').val($.cookie('loginName'))
             }
             $('.save').click(function (e) {
                 e.preventDefault();
@@ -105,10 +109,13 @@
                 }, function (data) {
                     if (data.code == 200) {
                         layer.msg(data.msg);
+                        var $remember = $('.remember');
+                        if ($remember.prop('checked')) {
+                            $.cookie('loginName',name);
+                        } 
                         setTimeout(() => {
                             window.location.href = '{{server}}'
                         }, 2000);
-
 
                     } else {
                         layer.msg(data.msg);
