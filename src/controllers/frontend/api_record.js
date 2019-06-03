@@ -39,10 +39,7 @@ class ApiRecord {
             let _data=await Mock.mock( eval("(" + data.code_rule + ")"));
             ctx.body=_data
         }catch (err){
-        
-            ctx.body={
-                msg:'代码规则错误，请检查再试'
-            }
+            return ctx.success({code:304, msg:'代码规则错误，请检查再试' });             
         }   
         
         

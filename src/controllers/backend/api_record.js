@@ -8,10 +8,6 @@ import moment from 'moment'
 class ApiRecord extends base{
     
     static async getList(ctx){
-        if (JSON.stringify(ctx.session) == "{}") {
-            //return ctx.success({code:401, msg:'你还没有登录' });  
-            ctx.redirect('/server/login')
-        }
         let currentPage=ctx.query.page || 1;
         let pageSize=10;
 
@@ -47,10 +43,6 @@ class ApiRecord extends base{
         //return ctx.success({ msg:'获取成功',data: data }); //统一响应格式
     }
     static async getDetail(ctx){
-        if (JSON.stringify(ctx.session) == "{}") {
-            //return ctx.success({code:401, msg:'你还没有登录' });  
-            ctx.redirect('/server/login')
-        }
         let id=ctx.params.id; //获取参数
         let data=await recordModel.getDetail(id);
         await ctx.render('pages/api_record/detail', {
@@ -65,10 +57,6 @@ class ApiRecord extends base{
      * @param {*} ctx 
      */
     static async add(ctx){
-        if (JSON.stringify(ctx.session) == "{}") {
-            //return ctx.success({code:401, msg:'你还没有登录' });  
-            ctx.redirect('/server/login')
-        }
         let id=ctx.query.id;
         if(id){
             let data=await recordModel.getDetail(id);
@@ -86,9 +74,6 @@ class ApiRecord extends base{
      * @param {*} ctx 
      */
     static async addPost(ctx){
-        if (JSON.stringify(ctx.session) == "{}") {
-            return ctx.success({code:401, msg:'你还没有登录' });  
-        }
         let params=ctx.request.body;
         let id=params.id;       
         params.update_time=new Date(); 
@@ -106,10 +91,6 @@ class ApiRecord extends base{
      * 删除
      */
     static async delete(ctx){
-        if (JSON.stringify(ctx.session) == "{}") {
-            return ctx.success({code:401, msg:'你还没有登录' });  
-        }
-        
         let params=ctx.request.body;
         let id=params.id;
         let data=await recordModel.delete(id);

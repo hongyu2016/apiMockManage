@@ -60,6 +60,7 @@
                 <div class="card">
                     <div class="card-header">
                         api访问地址：<a href="http://{{hostname}}" target="_blank">{{hostname}}</a>
+                        <button class="btn btn-sm btn-outline-secondary abc">ceshi</button>
                     </div>
                     <div class="card-body">
                         <blockquote class="blockquote mb-0">
@@ -113,6 +114,11 @@
                 });
 
             });
+            $('.abc').click(function(){
+                $.get('/api/api-record/api-mock/5',{},function(data){
+
+                },'json')
+            })
         })
     </script>
 </body>
