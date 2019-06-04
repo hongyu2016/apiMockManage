@@ -12,7 +12,7 @@ const path = require('path')
 
 const response = require('./src/middlewares/response'); //统一响应处理，在路由前调用
 const Koa_Session = require('koa-session');   // 导入koa-session 
-const checkSession=require('./src/middlewares/checkSession');//检查权限
+const checkSession = require('./src/middlewares/checkSession');//检查权限
 const { backendRouter, frontendRouter } = require('./src/index');
 
 // 配置session
@@ -86,12 +86,21 @@ app.use(cors({
     //}
     //return 'http://localhost:8000'; // 这样就能只允许 http://localhost:8080 这个域名的请求了
   },
-  exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
-  maxAge: 5,
+  exposeHeaders: ['WWW-Authenticate', 'Server-Authorization', 'Access-control-allow-origin'],
+  maxAge: 1,
   credentials: true,
-  allowMethods: ['GET', 'POST', 'DELETE'],
-  allowHeaders: ['Content-Type', 'Authorization', 'Accept'],
+  allowMethods: ['GET', 'POST', 'DELETE', 'PUT', 'OPTIONS'],
+  allowHeaders: ['Content-Type', 'Content-Length', 'Authorization', 'Accept', 'x-requested-with']
 }));
+//预检OPTIONS给通过
+app.use(async (ctx, next) => {
+  if (ctx.method === 'OPTIONS') {
+    ctx.body = 200;
+  }
+  await next();
+});
+
+
 
 // routes
 app.use(response) //统一响应格式
