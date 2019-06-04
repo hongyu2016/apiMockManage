@@ -20,11 +20,9 @@ nodejs koa2 前后端开发本地api数据模拟
 5.routes 为路由，将控制映射到路由
 6.utils 为工具函数
 
-##使用说明<br/>
+## 使用说明<br/>
 ```
 import axios from 'axios'  //引入axios插件
-
-
 
 axios({
    method: 'post',
