@@ -1,5 +1,5 @@
 # apiMockManage
-<span style="color: red"> nodejs koa2 前后端开发本地api数据模拟 </span>
+<span color=red> nodejs koa2 前后端开发本地api数据模拟 </span>
 ### nodejs，mysql，使用sequelize来操作数据库
 ### 基于 koa-generator 生成项目然后在此基础上进行修改
 ### 该架构适合开发后台管理系统以及restful 前端接口
