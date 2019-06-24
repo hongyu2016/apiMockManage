@@ -9,6 +9,9 @@
     <link href="/plugins/highlight/styles/default.css" rel="stylesheet" />
     <link href="{{plugins}}bootstrap4/css/bootstrap.min.css" rel="stylesheet" />
     <link href="{{plugins}}font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{{plugins}}codemirror-5.48.0/lib/codemirror.css" />
+    <link rel="stylesheet" href="{{plugins}}codemirror-5.48.0/addon/fold/foldgutter.css" />
+    <link rel="stylesheet" href="{{plugins}}codemirror-5.48.0/theme/dracula.css" />
     <link href="{{cssPath}}dashboard.css" rel="stylesheet" />
     <link href="{{cssPath}}style.css" rel="stylesheet" />
 </head>
@@ -60,13 +63,9 @@
             </div>
 
             <div class="col-sm-10">
-                <textarea class="form-control" id="rule" name="rule" rows="10" placeholder="{
-                            code: 200,
-                            msg: '成功',
-                            data: {
-                              list: []
-                            }
-                        }">{{code}}</textarea>
+                <textarea class="form-control" id="rule" name="rule">
+                    {{code}}                  
+                </textarea>
             </div>
         </div>
         <div class="form-group row">
@@ -111,10 +110,20 @@
             </code>
         </pre>
     </div>
+
     <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
     <script src="{{plugins}}bootstrap4/js/bootstrap.min.js"></script>
     <script src="{{plugins}}layer-v3.1.1/layer/layer.js"></script>
+    <script src="{{plugins}}codemirror-5.48.0/lib/codemirror.js"></script>
+    <script src="{{plugins}}codemirror-5.48.0/mode/javascript/javascript.js"></script>
+    <script src="{{plugins}}codemirror-5.48.0/addon/fold/foldcode.js"></script>
+    <script src="{{plugins}}codemirror-5.48.0/addon/fold/foldgutter.js"></script>
+    <script src="{{plugins}}codemirror-5.48.0/addon/fold/brace-fold.js"></script>
+    <script src="{{plugins}}codemirror-5.48.0/addon/fold/comment-fold.js"></script>
+    <!--格式化-->
+    <script src="{{plugins}}codemirror-5.48.0/lib/formatting.js"></script>
     <script src="{{js}}common.js"></script>
+
     <script src="/plugins/highlight/highlight.pack.js"></script>{# 代码高亮 #}
     <!-- <script>hljs.initHighlightingOnLoad();</script> -->
     <script>
@@ -124,19 +133,52 @@
             });
         }
         $(function () {
-            beautify()
-            $('#rule').blur(function () {
-                var _data = $(this).val();
+            var editor = CodeMirror.fromTextArea(document.getElementById("rule"), {
+                mode: "text/javascript",    //实现js代码高亮               
+                lineNumbers: true,	//显示行号
+                theme: "dracula",	//设置主题
+                lineWrapping: true,	//代码折叠
+                //foldGutter: true,
+                //gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
+                matchBrackets: true,	//括号匹配
+                //readOnly: true,        //只读
+                ///lineSeparator: String,
+            });
+            editor.on("change", function (ed, changes) {
+                var _data = editor.getValue();
                 var $code = $('.beautify>code');
                 $code.html(_data);
                 beautify()
             });
+
+            beautify()
+            /* $('#rule').blur(function () {
+                var _data = $(this).val();
+                var $code = $('.beautify>code');
+                $code.html(_data);
+                beautify()
+            }); */
+            var demoCode = '请点击左侧按钮查看示例代码'
+            if (!$.trim(editor.getValue())) {
+                editor.setValue(demoCode);
+            }
+
+
+            /* function getSelectedRange() {
+                return { from: editor.getCursor(true), to: editor.getCursor(false) };
+            } */
+            /* function autoFormatSelection() {
+                var range = getSelectedRange();
+                editor.autoFormatRange(range.from, range.to);     
+            } */
+
             $('.save').click(function (e) {
                 e.preventDefault();
                 var id = $('#code_id').val();
                 var name = $.trim($('#name').val()),
                     remark = $.trim($('#remark').val()),
-                    rule = $('#rule').val();
+                    // rule = $('#rule').val();
+                     rule = editor.getValue();
                 if (!name || !remark || !rule) {
                     layer.msg('请输入完整信息');
                     return false

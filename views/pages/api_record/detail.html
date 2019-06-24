@@ -31,7 +31,7 @@
                 <div class="btn-toolbar mb-2 mb-md-0 float-right">
                     <div class="btn-group mr-2">
                         <a class="btn btn-sm btn-danger" href="{{server}}api-record/add?id={{detail.id}}">编辑</a>
-                        <button class="btn btn-sm btn-outline-secondary delete">删除</button>
+                        <button class="btn btn-sm btn-outline-secondary delete" data-id="{{detail.id}}">删除</button>
                     </div>
                 </div>
             </div>
@@ -39,28 +39,12 @@
 
     </div>
     <div class="container-fluid">
-        <div class="row">
-            <!-- <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-body">
-                                api访问地址：{{hostname}}
-                            </div>
-                        </div>
-            
-                    </div>
-                    <div class="col-md-4">
-                        <p style="margin-top: 10px;">规则代码</p>
-                    </div>
-                    <div class="col-md-8">
-                        <pre class="beautify">
-                            <code class="plaintext">{{code}}</code>
-                        </pre>
-                    </div> -->
+        <div class="row">          
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
                         api访问地址：<a href="http://{{hostname}}" target="_blank">{{hostname}}</a>
-                        <button class="btn btn-sm btn-outline-secondary abc">ceshi</button>
+                        
                     </div>
                     <div class="card-body">
                         <blockquote class="blockquote mb-0">
@@ -104,7 +88,8 @@
                         success: function (result) {
                             layer.msg('删除成功', { icon: 1 });
                             setTimeout(function () {
-                                window.history.go(-1);
+                                //window.history.go(-1);
+                                window.location.href='{server}}api-record'
                             }, 2000)
                         }
                     });
@@ -114,11 +99,7 @@
                 });
 
             });
-            $('.abc').click(function(){
-                $.get('/api/api-record/api-mock/5',{},function(data){
-
-                },'json')
-            })
+            
         })
     </script>
 </body>
