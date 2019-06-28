@@ -63,9 +63,7 @@
             </div>
 
             <div class="col-sm-10">
-                <textarea class="form-control" id="rule" name="rule">
-                    {{code}}                  
-                </textarea>
+                <textarea class="form-control" id="rule" name="rule">{{code}}</textarea>
             </div>
         </div>
         <div class="form-group row">
@@ -116,6 +114,7 @@
     <script src="{{plugins}}layer-v3.1.1/layer/layer.js"></script>
     <script src="{{plugins}}codemirror-5.48.0/lib/codemirror.js"></script>
     <script src="{{plugins}}codemirror-5.48.0/mode/javascript/javascript.js"></script>
+    <script src="{{plugins}}codemirror-5.48.0/mode/htmlmixed/htmlmixed.js"></script>
     <script src="{{plugins}}codemirror-5.48.0/addon/fold/foldcode.js"></script>
     <script src="{{plugins}}codemirror-5.48.0/addon/fold/foldgutter.js"></script>
     <script src="{{plugins}}codemirror-5.48.0/addon/fold/brace-fold.js"></script>
@@ -134,7 +133,7 @@
         }
         $(function () {
             var editor = CodeMirror.fromTextArea(document.getElementById("rule"), {
-                mode: "text/javascript",    //实现js代码高亮               
+                mode: "text/javascript",    //实现js代码高亮    
                 lineNumbers: true,	//显示行号
                 theme: "dracula",	//设置主题
                 lineWrapping: true,	//代码折叠
@@ -142,7 +141,7 @@
                 //gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
                 matchBrackets: true,	//括号匹配
                 //readOnly: true,        //只读
-                ///lineSeparator: String,
+                //lineSeparator: String,
             });
             editor.on("change", function (ed, changes) {
                 var _data = editor.getValue();
@@ -166,8 +165,12 @@
 
             /* function getSelectedRange() {
                 return { from: editor.getCursor(true), to: editor.getCursor(false) };
-            } */
-            /* function autoFormatSelection() {
+            }
+
+            setTimeout(function(){
+                autoFormatSelection()
+            },1000)
+            function autoFormatSelection() {
                 var range = getSelectedRange();
                 editor.autoFormatRange(range.from, range.to);     
             } */

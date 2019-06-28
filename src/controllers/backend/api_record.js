@@ -62,8 +62,10 @@ class ApiRecord extends base{
             let data=await recordModel.getDetail(id);
             await ctx.render('pages/api_record/add', {
                 detail: data,
-                code:beautify(data.code_rule, { indent_size: 2, space_in_empty_paren: true }) //格式化代码
+                code:beautify(data.code_rule, { indent_size: 2, space_in_empty_paren: true })
+                //格式化代码
             });
+            
             return false;
         }
         
