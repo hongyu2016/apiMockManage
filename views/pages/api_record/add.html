@@ -69,7 +69,7 @@
         <div class="form-group row">
             <label for="rule" class="col-sm-2 col-form-label">代码规则预览</label>
             <div class="col-sm-10">
-                <pre class="beautify">
+                <pre class="beautify ma">
                     <code class="plaintext">{{code}}</code>
                 </pre>
             </div>
@@ -144,7 +144,7 @@
             });
             editor.on("change", function (ed, changes) {
                 var _data = editor.getValue();
-                var $code = $('.beautify>code');
+                var $code = $('.beautify.ma>code');
                 $code.html(_data);
                 beautify()
             });
