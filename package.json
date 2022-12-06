@@ -15,7 +15,7 @@
     "handlebars": "^4.1.2",
     "js-beautify": "^1.10.0",
     "koa": "^2.2.0",
-    "koa-bodyparser": "^3.2.0",
+    "koa-bodyparser": "^4.3.0",
     "koa-convert": "^1.2.0",
     "koa-json": "^2.0.2",
     "koa-logger": "^2.0.1",
